@@ -1,24 +1,58 @@
 ﻿@page "/productpage"
+@using BlazorApp.Shared
 
 <h1 class="mb-3 mt-3">Add Product</h1>
 
-<EditForm Model="@ProductModel" class="row p-3">
+<EditForm Model="@ProductModel" class="row p-3"
+          OnValidSubmit="@HandleValidSubmit"
+          OnInvalidSubmit="@HandleInvalidSubmit">
+
+    <DataAnnotationsValidator /> @* Håndter validering *@
+
+    @* Name *@
     <div class="col-md-12 mb-3">
         <label for="Name">Name</label>
         <InputText id="Name" @bind-Value="ProductModel.Name" class="form-control" />
+
+        @* Vis valideringsfejl for produktnavn *@
+        <ValidationMessage For="@(() => ProductModel.Name)" /> 
     </div>
+
+    @* Price *@
     <div class="col-md-6 mb-3">
         <label for="Price">Price</label>
-        <InputNumber id="Price" @bind-Value="ProductModel.Price" class="form-control" />
+        <InputNumber id="Price" @bind-Value="ProductModel.Price" class="form-control"
+                     ParsingErrorMessage="The {0} field has an invalid value."
+                     DisplayName="Product Price" />
+
+        @* Vis valideringsfejl for produkts pris *@
+        <ValidationMessage For="@(() => ProductModel.Price)" />
     </div>
+
+    @* Materials *@
+    <div class="col-md-6 mb-3">
+        <label for="Materials">Materials</label>
+        <InputSelect id="Material" @bind-Value="ProductModel.Material">
+            @foreach (var material in ProductMaterials)
+            {
+                <option value="@material">@material</option>
+            }
+        </InputSelect>
+    </div>
+
+    @* PublishedDate *@
     <div class="col-md-6 mb-3">
         <label for="PublishedDate">Published Date</label>
         <InputDate id="PublishedDate" @bind-Value="ProductModel.PublishedDate" class="form-control" />
     </div>
+
+    @* Description *@
     <div class="col-md-12 mb-3">
         <label for="Description">Description</label>
         <InputTextArea id="Description" @bind-Value="ProductModel.Description" class="form-control" />
     </div>
+
+    @* IsPublished *@
     <div class="col-12 mb-3">
         <div class="form-check">
             <InputCheckbox id="IsPublished" @bind-Value="ProductModel.IsPublished" class="form-check-input" />
@@ -27,7 +61,26 @@
             </label>
         </div>
     </div>
+
+    @* SubmitButton *@
     <div class="col-12 mb-3">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </EditForm>
+
+@* ProductList *@
+<ol>
+    @if (ProductList.Count == 0)
+    {
+        <content>Du har ingen elementer i din liste</content>
+    }
+    else
+    {
+        @foreach (var product in ProductList)
+        {
+            <RenderProduct product="@product" />
+        }
+    }
+</ol>
+
+<button class="btn btn-primary" @onclick="ClearProductList">Clear</button>

@@ -1,0 +1,79 @@
+﻿@using BlazorApp.Shared
+@page "/birthday"
+
+<table style="border-collapse: collapse;">
+    <tr>
+        <td style="width: 30%; vertical-align: top; padding-right: 1em;">
+            <img style="width: 15em; height: auto;" src="img/putin.png" />
+        </td>
+        <td style="vertical-align: top; padding-top: 1em;">
+            <h3>Invitation til min fødselsdag</h3>
+            <p>Jeg holder fødselsdag, og det skal fejres med manér!</p>
+            <p>Der vil være:</p>
+            <p>🍰 Lækker kage</p>
+            <p>🎲 Bjørnebrydning osv.</p>
+            <p>🎶 Musik og masser af god stemning</p>
+            <p>📍 Hvor: XX</p>
+            <p>Glæder mig til at se jer – det bliver en uforglemmelig aften! 🎊</p>
+        </td>
+    </tr>
+</table>
+
+<EditForm Model="@InvitationModel" class="row p-3"
+          OnValidSubmit="@HandleValidSubmit"
+          OnInvalidSubmit="@HandleInvalidSubmit">
+
+    @* Name *@
+    <div class="col-md-12 mb-3">
+        <label for="Name">Name</label>
+        <InputText id="Name" @bind-Value="InvitationModel.Name" class="form-control" />
+
+        @* Vis valideringsfejl for navn *@
+        <ValidationMessage For="@(() => InvitationModel.Name)" />
+    </div>
+
+    @* Email *@
+    <div class="col-md-12 mb-3">
+        <label for="Email">Email</label>
+        <InputText id="Email" @bind-Value="InvitationModel.Email" class="form-control" />
+
+        @* Vis valideringsfejl for email *@
+        <ValidationMessage For="@(() => InvitationModel.Email)" />
+    </div>
+
+    <div>
+        <label for="IsComing">Jeg kommer</label>
+        <InputCheckbox id="IsComing" @bind-Value="InvitationModel.IsComing" />
+    </div>
+
+    @* Number of attendants *@
+    <div class="col-md-6 mb-3">
+        <label for="Attendants">Antal deltagere</label>
+        <InputNumber id="Attendants" @bind-Value="InvitationModel.Attendants" class="form-control"
+                     ParsingErrorMessage="The {0} field has an invalid value."
+                     DisplayName="Product Price" />
+
+        @* Vis valideringsfejl for deltagere *@
+        <ValidationMessage For="@(() => InvitationModel.Attendants)" />
+    </div>
+
+    @* SubmitButton *@
+    <div class="col-12 mb-3">
+        <button type="submit" class="btn btn-primary">Svar fødselaren!</button>
+    </div>
+</EditForm>
+
+<ul>
+    @if (AnswerList.Count == 0)
+    {
+        <p>Der er ingen der gider at komme endnu...</p>
+    }
+    else
+    {
+        @for (int i = 0; i < AnswerList.Count; i++)
+        {
+            <RenderAnswer Answer="@AnswerList[i]" PictureIndex="@i" class="fade-in" />
+        }
+    }
+</ul>
+
