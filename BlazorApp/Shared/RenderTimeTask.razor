@@ -1,5 +1,7 @@
 ﻿@using BlazorApp.Models
 <p>@Task.Name   @Task.Time</p>
+<RadzenButton Click="AddMinute">+1 minut</RadzenButton>
+<RadzenButton Click="SubtractMinute">-1 minut</RadzenButton>
 
 @code {
     [Parameter, EditorRequired]
@@ -8,12 +10,18 @@
     [Parameter, EditorRequired]
     public EventCallback<int> OnMinutesChanged { get; set; }
 
-    public async Task OnTimeChanged(ChangeEventArgs e)
+    private async Task AddMinute()
     {
-        if (int.TryParse(e.Value.ToString(), out int newTime))
+        Task.Time++;
+        await OnMinutesChanged.InvokeAsync(Task.Time);
+    }
+
+    private async Task SubtractMinute()
+    {
+        if (Task.Time > 0)
         {
-            Time = newTime;
-            await OnMinutesChanged.InvokeAsync();
+            Task.Time--;
+            await OnMinutesChanged.InvokeAsync(Task.Time);
         }
     }
 }

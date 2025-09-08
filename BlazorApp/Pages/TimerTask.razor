@@ -7,7 +7,7 @@
     <RadzenColumn>
         @foreach (var todo in Tasks)
         {
-            <RenderTimeTask Task=@todo @* OnMinutesChanged="" *@></RenderTimeTask>
+            <RenderTimeTask Task=@todo OnMinutesChanged="@(newTime => UpdateTime(@todo, newTime))"></RenderTimeTask>
         }
     </RadzenColumn>
 </RadzenTable>

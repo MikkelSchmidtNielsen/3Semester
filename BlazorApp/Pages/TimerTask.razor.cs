@@ -11,5 +11,10 @@ namespace BlazorApp.Pages
         {
             Tasks.Add(new Todo { Name = name, Time = time });
         }
+
+        private void UpdateTime(Todo todo, int newTime)
+        {
+            todo.Time = newTime;
+        }
     }
 }
