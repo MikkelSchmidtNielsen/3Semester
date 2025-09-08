@@ -1,0 +1,19 @@
+﻿@using BlazorApp.Models
+<p>@Task.Name   @Task.Time</p>
+
+@code {
+    [Parameter, EditorRequired]
+    public Todo Task { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<int> OnMinutesChanged { get; set; }
+
+    public async Task OnTimeChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value.ToString(), out int newTime))
+        {
+            Time = newTime;
+            await OnMinutesChanged.InvokeAsync();
+        }
+    }
+}

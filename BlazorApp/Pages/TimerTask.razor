@@ -1,4 +1,18 @@
 ﻿@page "/to-do"
+@using BlazorApp.Shared
+@using System.Linq 
 
-<h3>To-do</h3>
 
+<RadzenTable>
+    <RadzenColumn>
+        @foreach (var todo in Tasks)
+        {
+            <RenderTimeTask Task=@todo OnMinutesChanged=""></RenderTimeTask>
+        }
+    </RadzenColumn>
+</RadzenTable>
+
+<RadzenFormField Text="Add task to to-do" Variant="@variant">
+    <RadzenTextBox @bind-Value="@value" />
+</RadzenFormField>
+<RadzenButton Click="AddTask()">Submit</RadzenButton>
