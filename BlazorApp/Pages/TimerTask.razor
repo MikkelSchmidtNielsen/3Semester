@@ -7,12 +7,12 @@
     <RadzenColumn>
         @foreach (var todo in Tasks)
         {
-            <RenderTimeTask Task=@todo OnMinutesChanged=""></RenderTimeTask>
+            <RenderTimeTask Task=@todo @* OnMinutesChanged="" *@></RenderTimeTask>
         }
     </RadzenColumn>
 </RadzenTable>
 
-<RadzenFormField Text="Add task to to-do" Variant="@variant">
-    <RadzenTextBox @bind-Value="@value" />
+<RadzenFormField Text="Add task to to-do" @* Variant="@variant" *@>
+    <RadzenTextBox @* @bind-Value="@value" *@ />
 </RadzenFormField>
-<RadzenButton Click="AddTask()">Submit</RadzenButton>
+<RadzenButton @* Click="AddTask()" *@>Submit</RadzenButton>
