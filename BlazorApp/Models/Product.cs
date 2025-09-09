@@ -14,7 +14,7 @@ namespace BlazorApp.Models
         public decimal Price { get; set; }
 
         public string Description { get; set; }
-        
+
         public string Material { get; set; }
 
         public bool IsPublished { get; set; }

@@ -1,27 +1,22 @@
-﻿@using BlazorApp.Models
-<p>@Task.Name   @Task.Time</p>
-<RadzenButton Click="AddMinute">+1 minut</RadzenButton>
-<RadzenButton Click="SubtractMinute">-1 minut</RadzenButton>
+﻿@using Microsoft.AspNetCore.Components.Forms
 
-@code {
-    [Parameter, EditorRequired]
-    public Todo Task { get; set; }
+<tr>
+    <td style="@TextStyle">@Task.Name</td>
+    <td>@Task.Time</td>
+    <td class="action-cell">
+        <button class="add-minute" @onclick="AddMinute">@AddButtonText</button>
+        <button class="subtract-minute" @onclick="SubtractMinute">@SubtractButtonText</button>
 
-    [Parameter, EditorRequired]
-    public EventCallback<int> OnMinutesChanged { get; set; }
-
-    private async Task AddMinute()
-    {
-        Task.Time++;
-        await OnMinutesChanged.InvokeAsync(Task.Time);
-    }
-
-    private async Task SubtractMinute()
-    {
-        if (Task.Time > 0)
+        @if (_showAssignmentThree)
         {
-            Task.Time--;
-            await OnMinutesChanged.InvokeAsync(Task.Time);
+            <button class="delete-minute" @onclick="DeleteTaskClicked">Delete task</button>
         }
-    }
-}
+
+        @if (_showAssignmentSix)
+        {
+            <p>New title: </p>
+            <input @bind="@_newTaskTitel" style="margin-left: 10px;" placeholder="@Task.Name" />
+            <button class="update-button" @onclick="UpdateTaskTitel">Update tasktitel</button>
+        }
+    </td>
+</tr>

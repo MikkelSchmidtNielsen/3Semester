@@ -1,18 +1,97 @@
 ﻿@page "/to-do"
 @using BlazorApp.Shared
-@using System.Linq 
+@using Microsoft.AspNetCore.Components.Forms
 
+<table>
+    <thead>
+        <tr>
+            <th>Task name</th>
+            <th>Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <CascadingValue Value="@_showAssignmentThree" Name="ShowAssignmentThree">
+            <CascadingValue Value="@_showAssignmentSix" Name="ShowAssignmentSix">
+            <CascadingValue Value="@SubtractButtonText" Name="SubtractButtonText">
+                <CascadingValue Value="@AddButtonText" Name="AddButtonText">
+                    <CascadingValue Value="@TextStyle" Name="TextStyle">
+                        @foreach (var todo in Tasks)
+                        {
+                            <RenderTimeTask Task=@todo
+                                            OnMinutesChanged="@(newTime => UpdateTime(todo, newTime))"
+                                            OnDeleteTask="@(() => OnDeleteTask(todo))">
+                            </RenderTimeTask>
+                        }
+                    </CascadingValue>
+                </CascadingValue>
+            </CascadingValue>
+        </CascadingValue>
+        </CascadingValue>
+    </tbody>
+</table>
 
-<RadzenTable>
-    <RadzenColumn>
-        @foreach (var todo in Tasks)
-        {
-            <RenderTimeTask Task=@todo OnMinutesChanged="@(newTime => UpdateTime(@todo, newTime))"></RenderTimeTask>
-        }
-    </RadzenColumn>
-</RadzenTable>
+<br />
 
-<RadzenFormField Text="Add task to to-do" @* Variant="@variant" *@>
-    <RadzenTextBox @* @bind-Value="@value" *@ />
-</RadzenFormField>
-<RadzenButton @* Click="AddTask()" *@>Submit</RadzenButton>
+<button class="btn btn-primary" @onclick="ShowAssignmentThree">Opgave 3</button>
+
+<button class="btn btn-primary" @onclick="ShowAssignmentFour">Opgave 4</button>
+
+<button class="btn btn-primary" @onclick="ShowAssignmentFive">Opgave 5</button>
+
+<button class="btn btn-primary" @onclick="ShowAssignmentSix">Opgave 6</button>
+
+@if (_showTaskAssignmentFour)
+{
+    @* Cascading textfield *@
+    <div class="col-md-12 mb-3">
+        <label for="TextStyle">Text style</label>
+        <InputText id="Task" @bind-Value="@TextStyle" class="form-control" />
+    </div>
+
+    @* Cascading add button *@
+    <div class="col-md-12 mb-3">
+        <label for="TextStyle">Add button text</label>
+        <InputText id="Task" @bind-Value="@AddButtonText" class="form-control" />
+    </div>
+
+    @* Cascading subtract button *@
+    <div class="col-md-12 mb-3">
+        <label for="TextStyle">Subtract button text</label>
+        <InputText id="Task" @bind-Value="@SubtractButtonText" class="form-control" />
+    </div>
+}
+
+@if (_showTaskAssignmentFive)
+{
+    @* Task adding form *@
+    <EditForm Model="@TodoModel" class="row p-3"
+              OnValidSubmit="@HandleValidSubmit"
+              OnInvalidSubmit="@HandleInvalidSubmit">
+
+        @* Task *@
+        <div class="col-md-12 mb-3">
+            <label for="TaskName">Opgave</label>
+            <InputText id="Task" @bind-Value="@TodoModel.Name" class="form-control" />
+
+            @* Vis valideringsfejl for navn *@
+            <ValidationMessage For="@(() => TodoModel.Name)" />
+        </div>
+
+        @* Minutes *@
+        <div class="col-md-6 mb-3">
+            <label for="Minutes">Antal minutter</label>
+            <InputNumber id="Minutes" @bind-Value="@TodoModel.Time" class="form-control"
+                         ParsingErrorMessage="The {0} field has an invalid value."
+                         DisplayName="Minutes" />
+
+            @* Vis valideringsfejl for deltagere *@
+            <ValidationMessage For="@(() => TodoModel.Time)" />
+        </div>
+
+        @* SubmitButton *@
+        <div class="col-12 mb-3">
+            <button type="submit" class="btn btn-primary">Tilføj opgave</button>
+        </div>
+    </EditForm>
+}

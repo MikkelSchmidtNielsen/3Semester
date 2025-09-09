@@ -1,5 +1,4 @@
 ﻿using BlazorApp.Models;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace BlazorApp.Pages
 {
@@ -9,7 +8,7 @@ namespace BlazorApp.Pages
 
         private List<Product> ProductList = new List<Product>();
 
-        private string[] ProductMaterials = {"", "Træ", "Plastik", "Metal"};
+        private string[] ProductMaterials = { "", "Træ", "Plastik", "Metal" };
 
         protected override void OnInitialized()
         {

@@ -1,5 +1,4 @@
-﻿@using BlazorApp.Models
-<table style="border-collapse: collapse;">
+﻿<table style="border-collapse: collapse;">
     <tr>
         <td style="width: 30%; vertical-align: top; padding-right: 1em;">
             <img style="width: 15em; aspect-ratio: 1 / 1; object-fit: cover; object-position: center; display: block;" src="@ProfilePictures[PictureIndex]" />
@@ -20,13 +19,3 @@
         </td>
     </tr>
 </table>
-
-@code {
-    [Parameter, EditorRequired]
-    public InviteAnswer Answer { get; set; }
-
-    [Parameter, EditorRequired]
-    public int PictureIndex { get; set; }
-
-    public string[] ProfilePictures = { "img/mette.png", "img/zelen.png" };
-}
