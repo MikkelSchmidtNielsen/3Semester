@@ -1,18 +1,18 @@
-﻿<table style="border-collapse: collapse;">
+﻿<table class="fade-up" style="border-collapse: collapse;">
     <tr>
         <td style="width: 30%; vertical-align: top; padding-right: 1em;">
-            <img style="width: 15em; aspect-ratio: 1 / 1; object-fit: cover; object-position: center; display: block;" src="@ProfilePictures[PictureIndex]" />
+            <img style="width: 11em; aspect-ratio: 1 / 1; object-fit: cover; object-position: center; display: block;" src="" />
         </td>
         <td style="vertical-align: top; padding-top: 1em;">
             <h2>@Answer.Name</h2>
             <p>Email: @Answer.Email</p>
             @if (Answer.IsComing == true)
             {
-                <p>Deltager: jeg kommer!</p>
+                <p>Deltager: Jada!</p>
             }
             else
             {
-                <p>Deltager: jeg kommer ikke!</p>
+                <p>Deltager: Hell no...</p>
             }
             <p>PlusOnes: @Answer.Attendants</p>
             <p>Svartidspunkt: @Answer.AnswerTime.ToLongTimeString()</p>

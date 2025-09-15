@@ -4,17 +4,16 @@ namespace BlazorApp.Models
 {
     public class InviteAnswer
     {
-        [Required]
+        [Required(ErrorMessage = "Navn skal udfyldes")]
         [StringLength(50, ErrorMessage = "Navn må ikke være længere end 50 tegn")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email skal udfyldes")]
+        [EmailAddress(ErrorMessage = "Indtast en gyldig email-adresse")]
         public string Email { get; set; }
 
-        [Required]
         public bool IsComing { get; set; }
 
-        [Required]
         public int Attendants { get; set; }
         public DateTime AnswerTime { get; set; } = DateTime.Now;
 

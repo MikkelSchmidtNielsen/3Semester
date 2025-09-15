@@ -1,0 +1,25 @@
+﻿@page "/additem"
+@using BlazorAppRESTAPIAssignments.Client.Services
+@using BlazorAppRESTAPIAssignments.Shared.Models
+@rendermode InteractiveAuto
+
+<h1>Add item to basket</h1>
+
+<button @onclick="AddShoppingItemHandler">Add to basket</button>
+
+@code {
+    [Inject]
+    public IShoppingService ShoppingService { get; set; }
+
+    private int ErrorCode { get; set; } = 0;
+
+    private async Task AddShoppingItemHandler()
+    {
+        ShoppingItem item = new ShoppingItem(4, "Mælk", 5, false);
+
+        ErrorCode = await ShoppingService.AddItem(item);
+
+        Console.WriteLine("Shopping item added: return code: " + ErrorCode);
+    }
+}
+

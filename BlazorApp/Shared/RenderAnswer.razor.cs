@@ -10,7 +10,5 @@ namespace BlazorApp.Shared
 
         [Parameter, EditorRequired]
         public int PictureIndex { get; set; }
-
-        public string[] ProfilePictures = { "img/mette.png", "img/zelen.png" };
     }
 }

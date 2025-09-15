@@ -1,0 +1,23 @@
+﻿@page "/bookpage"
+@using BlazorAppRESTAPIAssignments.Client.Services
+@using BlazorAppRESTAPIAssignments.Shared.Models
+@using BlazorAppRESTAPIAssignments.Client.Shared
+
+<h1>Book Page</h1>
+
+@foreach (var book in Books)
+{
+    <RenderBook BookModel="@book"></RenderBook>
+}
+
+@code {
+    private List<Book> Books { get; set; } = new List<Book>();
+
+    [Inject]
+    public IBookService _bookService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Books = (await _bookService.GetAllBooks()).ToList();
+    }
+}

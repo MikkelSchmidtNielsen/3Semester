@@ -14,6 +14,8 @@ namespace BlazorApp.Pages
             new Todo { Name = "Implementation", Time = 75 }
         };
 
+        private int TotalTime => Tasks.Sum(t => t.Time);
+
         public Todo TodoModel { get; set; } = new Todo();
 
         private void UpdateTime(Todo todo, int newTime)

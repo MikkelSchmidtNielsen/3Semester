@@ -1,0 +1,11 @@
+﻿@page "/shoppinglist"
+@using BlazorAppRESTAPIAssignments.Client.Services
+@using BlazorAppRESTAPIAssignments.Client.Shared
+@inject IShoppingService _shoppingService
+
+<h1>SHOPPINGLIST</h1>
+
+@foreach (var item in Items)
+{
+    <RenderShoppingItem ShoppingItemModel="item" />
+}

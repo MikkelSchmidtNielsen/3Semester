@@ -5,7 +5,7 @@
 <table style="border-collapse: collapse;">
     <tr>
         <td style="width: 30%; vertical-align: top; padding-right: 1em;">
-            <img style="width: 15em; height: auto;" src="img/putin.png" />
+            <img style="width: 11em; height: auto;" src="" />
         </td>
         <td style="vertical-align: top; padding-top: 1em;">
             <h3>Invitation til min fødselsdag</h3>
@@ -20,49 +20,52 @@
     </tr>
 </table>
 
-<EditForm Model="@InvitationModel" class="row p-3"
-          OnValidSubmit="@HandleValidSubmit"
-          OnInvalidSubmit="@HandleInvalidSubmit">
+<div @onkeydown="HandleShortCut" tabindex="0">
+    <EditForm Model="@InvitationModel" class="row p-3"
+              OnValidSubmit="@HandleValidSubmit"
+              OnInvalidSubmit="@HandleInvalidSubmit">
 
-    @* Name *@
-    <div class="col-md-12 mb-3">
-        <label for="Name">Name</label>
-        <InputText id="Name" @bind-Value="InvitationModel.Name" class="form-control" />
+        <DataAnnotationsValidator /> @* Håndter validering *@
 
-        @* Vis valideringsfejl for navn *@
-        <ValidationMessage For="@(() => InvitationModel.Name)" />
-    </div>
+        <div class="row mb-3">
+            @* Name *@
+            <div class="col-md-6">
+                <label for="Name">Name</label>
+                <InputText id="Name" @bind-Value="InvitationModel.Name" class="form-control" />
 
-    @* Email *@
-    <div class="col-md-12 mb-3">
-        <label for="Email">Email</label>
-        <InputText id="Email" @bind-Value="InvitationModel.Email" class="form-control" />
+                @* Vis valideringsfejl for navn *@
+                <ValidationMessage For="@(() => InvitationModel.Name)" />
+            </div>
 
-        @* Vis valideringsfejl for email *@
-        <ValidationMessage For="@(() => InvitationModel.Email)" />
-    </div>
+            @* Email *@
+            <div class="col-md-6">
+                <label for="Email">Email</label>
+                <InputText id="Email" @bind-Value="InvitationModel.Email" class="form-control" />
 
-    <div>
-        <label for="IsComing">Jeg kommer</label>
-        <InputCheckbox id="IsComing" @bind-Value="InvitationModel.IsComing" />
-    </div>
+                @* Vis valideringsfejl for email *@
+                <ValidationMessage For="@(() => InvitationModel.Email)" />
+            </div>
+        </div>
 
-    @* Number of attendants *@
-    <div class="col-md-6 mb-3">
-        <label for="Attendants">Antal deltagere</label>
-        <InputNumber id="Attendants" @bind-Value="InvitationModel.Attendants" class="form-control"
-                     ParsingErrorMessage="The {0} field has an invalid value."
-                     DisplayName="Product Price" />
+        <div class="row mb-3">
+            @* Number of attendants *@
+            <div class="col-md-6">
+                <label for="Attendants">Antal deltagere</label>
+                <InputNumber id="Attendants" @bind-Value="InvitationModel.Attendants" class="form-control" />
+            </div>
 
-        @* Vis valideringsfejl for deltagere *@
-        <ValidationMessage For="@(() => InvitationModel.Attendants)" />
-    </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <label for="IsComing" class="me-2">Jeg kommer</label>
+                <InputCheckbox id="IsComing" @bind-Value="InvitationModel.IsComing" />
+            </div>
+        </div>
 
-    @* SubmitButton *@
-    <div class="col-12 mb-3">
-        <button type="submit" class="btn btn-primary">Svar fødselaren!</button>
-    </div>
-</EditForm>
+        @* SubmitButton *@
+        <div class="col-12 mb-3">
+            <button type="submit" class="btn btn-primary">Svar fødselaren!</button>
+        </div>
+    </EditForm>
+</div>
 
 <ul>
     @if (AnswerList.Count == 0)
@@ -73,7 +76,7 @@
     {
         @for (int i = 0; i < AnswerList.Count; i++)
         {
-            <RenderAnswer Answer="@AnswerList[i]" PictureIndex="@i" class="fade-in" />
+            <RenderAnswer Answer="@AnswerList[i]" PictureIndex="@i" />
         }
     }
 </ul>
