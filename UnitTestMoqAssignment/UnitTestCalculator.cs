@@ -1,5 +1,5 @@
 using Moq;
-using moq_examples.Interfaces;
+using MoqExamples.Interfaces;
 
 namespace UnitTestMoqAssignment
 {

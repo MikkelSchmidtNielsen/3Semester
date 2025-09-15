@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Documents\3. Semester\Programmering\02 Moq\moq-examples-master\moq examples.csproj" />
+    <ProjectReference Include="..\MoqExamples\MoqExamples.csproj" />
   </ItemGroup>
 
   <ItemGroup>

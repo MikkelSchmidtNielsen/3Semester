@@ -59,5 +59,12 @@ namespace BlazorAppRESTAPIAssignments.Controllers
             var result = Repository.FindItem(id);
             return result;
         }
+
+        [HttpPut]
+        public bool UpdateItem(ShoppingItem item)
+        {
+            var result = Repository.UpdateItem(item);
+            return result;
+        }
     }
 }

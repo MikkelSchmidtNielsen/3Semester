@@ -5,21 +5,20 @@
 
 <h1>Add item to basket</h1>
 
-<button @onclick="AddShoppingItemHandler">Add to basket</button>
+<EditForm Model="@ShoppingItemModel"
+          OnValidSubmit="@(() => AddShoppingItemHandler(ShoppingItemModel))">
 
-@code {
-    [Inject]
-    public IShoppingService ShoppingService { get; set; }
+    <div>
+        <label>Item name</label><br />
+        <InputText @bind-Value="ShoppingItemModel.Name"></InputText>
+    </div>
 
-    private int ErrorCode { get; set; } = 0;
+    <div>
+        <label>Quantity</label><br />
+        <InputNumber @bind-Value="ShoppingItemModel.Quantity"></InputNumber>
+    </div>
 
-    private async Task AddShoppingItemHandler()
-    {
-        ShoppingItem item = new ShoppingItem(4, "Mælk", 5, false);
+    <button type="submit">Add to basket</button>
+</EditForm>
 
-        ErrorCode = await ShoppingService.AddItem(item);
-
-        Console.WriteLine("Shopping item added: return code: " + ErrorCode);
-    }
-}
 

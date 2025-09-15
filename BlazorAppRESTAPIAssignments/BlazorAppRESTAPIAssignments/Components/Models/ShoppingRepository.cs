@@ -5,9 +5,21 @@ namespace BlazorAppRESTAPIAssignments.Components.Models
     public class ShoppingRepository : IShoppingRepository
     {
         private static readonly List<ShoppingItem> Items;
+        private static int _id;
 
-        public void AddItem(ShoppingItem item)
+		static ShoppingRepository()
+		{
+			Items = new List<ShoppingItem>();
+			Items.Clear();
+			InsertTestData();
+
+            _id = Items.Count;
+		}
+
+		public void AddItem(ShoppingItem item)
         {
+            _id++;
+            item.Id = _id;
             Items.Add(item);
         }
 
@@ -25,7 +37,19 @@ namespace BlazorAppRESTAPIAssignments.Components.Models
 
         public bool UpdateItem(ShoppingItem item)
         {
-            throw new NotImplementedException();
+            ShoppingItem oldShoppingItem = Items.FirstOrDefault(x => x.Id == item.Id);
+
+            if (oldShoppingItem != null)
+            {
+                oldShoppingItem.Name = item.Name;
+                oldShoppingItem.Quantity = item.Quantity;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
 
@@ -37,7 +61,7 @@ namespace BlazorAppRESTAPIAssignments.Components.Models
                 if (item.Id == id)
                     return item;
             }
-            return new ShoppingItem(-1, "", 0, false);
+            return new ShoppingItem(-1);
         }
 
         public List<ShoppingItem> GetAllItems()
@@ -46,19 +70,12 @@ namespace BlazorAppRESTAPIAssignments.Components.Models
         }
 
 
-        static ShoppingRepository()
-        {
-            Items = new List<ShoppingItem>();
-            Items.Clear();
-            InsertTestData();
-
-        }
+        
 
         public static void InsertTestData()
         {
             Items.Add(new ShoppingItem(id: 1, "Bananer", 5, false));
             Items.Add(new ShoppingItem(id: 2, "Gulerødder", 10, true));
-
         }
     }
 }

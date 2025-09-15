@@ -1,12 +1,6 @@
 ﻿using Moq;
-using moq_examples;
-using moq_examples.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
+using MoqExamples;
+using MoqExamples.Interfaces;
 
 namespace UnitTestMoqAssignment
 {
@@ -41,7 +35,7 @@ namespace UnitTestMoqAssignment
             loggerMock.Setup(x => x.LogMessage(expected)).Callback(() => logs.Add(expected));
 
             UserService userService = new UserService(loggerMock.Object);
-
+            
             // Act
             userService.PerformAction(username, message);
 

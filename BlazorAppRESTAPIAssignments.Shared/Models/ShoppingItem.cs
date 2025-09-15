@@ -13,12 +13,21 @@ namespace BlazorAppRESTAPIAssignments.Shared.Models
         public int Quantity { get; set; }
         public bool HaveBought { get; set; }
 
-        public ShoppingItem(int id, string name, int quantity, bool haveBought)
-        {
-            Id = id;
-            Name = name;
-            Quantity = quantity;
-            HaveBought = haveBought;
-        }
-    }
+		public ShoppingItem()
+		{
+		}
+
+		public ShoppingItem(int id)
+		{
+			Id = id;
+		}
+
+		public ShoppingItem(int id, string name, int quantity, bool haveBought)
+		{
+			Id = id;
+			Name = name;
+			Quantity = quantity;
+			HaveBought = haveBought;
+		}
+	}
 }

@@ -1,11 +1,37 @@
 ﻿@page "/shoppinglist"
 @using BlazorAppRESTAPIAssignments.Client.Services
 @using BlazorAppRESTAPIAssignments.Client.Shared
+@rendermode InteractiveAuto
 @inject IShoppingService _shoppingService
 
 <h1>SHOPPINGLIST</h1>
 
 @foreach (var item in Items)
 {
-    <RenderShoppingItem ShoppingItemModel="item" />
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <RenderShoppingItem ShoppingItemModel="item" />
+        <button id="btn btn-primary" @onclick="@(() => DeleteSelectedIdHandler(item.Id))">Delete</button>
+        <button id="btn btn-primary" @onclick="@(() => GetUpdateForm(item))">Update</button>
+    </div>
 }
+
+@if (_showUpdateForm == true)
+{
+    <EditForm Model="@ShoppingItemModel"
+        OnValidSubmit="UpdateShoppingItem">
+        
+        <div>
+            <label>Product Name</label>
+            <InputText @bind-Value="@ShoppingItemModel.Name"></InputText>
+        </div>
+
+        <div>
+            <label>Quantity</label>
+            <InputNumber @bind-Value="@ShoppingItemModel.Quantity"></InputNumber>
+        </div>
+
+        <button type="submit">Update Shopping Item</button>
+    </EditForm>
+}
+
+<p>ErrorCode: @ErrorCode</p>

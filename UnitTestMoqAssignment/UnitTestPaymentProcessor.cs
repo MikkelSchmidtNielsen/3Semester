@@ -1,11 +1,6 @@
 ﻿using Moq;
-using moq_examples;
-using moq_examples.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MoqExamples;
+using MoqExamples.Interfaces;
 
 namespace UnitTestMoqAssignment
 {
@@ -26,7 +21,7 @@ namespace UnitTestMoqAssignment
                 .Returns("Completed");
 
             PaymentProcessor paymentProcessor = new PaymentProcessor(paymentServiceMock.Object);
-
+            
             // Act
             results[0] = paymentProcessor.TrackPayment(id);
             results[1] = paymentProcessor.TrackPayment(id);

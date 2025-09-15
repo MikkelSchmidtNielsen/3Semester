@@ -39,9 +39,11 @@ namespace BlazorAppRESTAPIAssignments.Client.Services
             return (int)responseStatusCode;
         }
 
-        public Task<int> UpdateItem(ShoppingItem item)
+        public async Task<int> UpdateItem(ShoppingItem item)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.PutAsJsonAsync("api/shopapi/", item);
+            var responseStatusCode = response.StatusCode;
+            return (int)responseStatusCode;
         }
     }
 }
