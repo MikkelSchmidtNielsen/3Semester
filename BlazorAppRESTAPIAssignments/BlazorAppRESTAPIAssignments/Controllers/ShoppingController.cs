@@ -47,10 +47,11 @@ namespace BlazorAppRESTAPIAssignments.Controllers
         }
 
         [HttpPost]
-        public void AddItem(ShoppingItem item)
+        public IActionResult AddItem(ShoppingItem item)
         {
             Console.WriteLine("Add item called: " + item.ToString());
             Repository.AddItem(item);
+            return Ok(); // return Ok = errorcode 200
         }
 
         [HttpGet("{id:int}")]

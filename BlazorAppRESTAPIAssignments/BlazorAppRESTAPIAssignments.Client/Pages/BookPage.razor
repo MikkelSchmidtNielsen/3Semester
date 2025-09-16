@@ -2,6 +2,8 @@
 @using BlazorAppRESTAPIAssignments.Client.Services
 @using BlazorAppRESTAPIAssignments.Shared.Models
 @using BlazorAppRESTAPIAssignments.Client.Shared
+@rendermode InteractiveAuto // VIGTIG ved editform ellers sender den aldrig noget!!
+@inject IBookService _bookService
 
 <h1>Book Page</h1>
 
@@ -10,14 +12,35 @@
     <RenderBook BookModel="@book"></RenderBook>
 }
 
-@code {
-    private List<Book> Books { get; set; } = new List<Book>();
+<EditForm Model="@BookModel" OnValidSubmit="AddBookHandler" FormName="AddBookForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-    [Inject]
-    public IBookService _bookService { get; set; }
+    <div>
+        <label>ISBN</label>
+        <InputText @bind-Value="BookModel.Isbn" />
+        <ValidationMessage For="@(() => BookModel.Isbn)" />
+    </div>
 
-    protected override async Task OnInitializedAsync()
-    {
-        Books = (await _bookService.GetAllBooks()).ToList();
-    }
-}
+    <div>
+        <label>Book Titel</label>
+        <InputText @bind-Value="BookModel.Title" />
+        <ValidationMessage For="@(() => BookModel.Title)" />
+    </div>
+
+    <div>
+        <label>Author</label>
+        <InputText @bind-Value="BookModel.Author" />
+        <ValidationMessage For="@(() => BookModel.Author)" />
+    </div>
+
+    <div>
+        <label>Year</label>
+        <InputNumber @bind-Value="BookModel.Year" />
+        <ValidationMessage For="@(() => BookModel.Year)" />
+    </div>
+
+    <button type="submit">Add Book</button>
+</EditForm>
+
+<p>ErrorCode: @ErrorCode</p>

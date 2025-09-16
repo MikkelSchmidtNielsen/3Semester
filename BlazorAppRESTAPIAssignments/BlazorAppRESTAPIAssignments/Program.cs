@@ -20,14 +20,17 @@ namespace BlazorAppRESTAPIAssignments
             builder.Services.AddControllers();
 
             builder.Services.AddScoped<IShoppingService, ShoppingService>(); // Hvorfor her?!
+            builder.Services.AddScoped<IBookService, BookService>();
 
             builder.Services.AddSingleton(new HttpClient
             {
                 BaseAddress = new Uri("https://localhost:7027/")
             });
 
-            builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<IShoppingRepository, ShoppingRepository>();
+
+            // Hvis denne ikke er der -> Unable to resolve service for type 'IBookRepository' while attempting to activate 'BookController'.
+            builder.Services.AddScoped<IBookRepository, BookRepository>(); 
 
             var app = builder.Build();
 
@@ -40,7 +43,8 @@ namespace BlazorAppRESTAPIAssignments
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseWebAssemblyDebugging();
+                //app.UseWebAssemblyDebugging();
+                app.UseDeveloperExceptionPage(); // Viser fejl ved api kald skriv i browseren "localhost:XXXX/api/bookapi".
             }
             else
             {

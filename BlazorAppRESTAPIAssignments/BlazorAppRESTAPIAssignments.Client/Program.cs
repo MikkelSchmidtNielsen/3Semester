@@ -10,10 +10,15 @@ namespace BlazorAppRESTAPIAssignments.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+            builder.Services.AddHttpClient<IBookService, BookService>(client =>
+            {
+                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+            });
+
             builder.Services.AddHttpClient<IShoppingService, ShoppingService>(client =>
-                {
-                    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
-                });
+            {
+                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+            });
 
             await builder.Build().RunAsync();
         }

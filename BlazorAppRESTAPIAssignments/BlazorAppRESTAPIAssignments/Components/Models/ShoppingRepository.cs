@@ -69,9 +69,6 @@ namespace BlazorAppRESTAPIAssignments.Components.Models
             return Items;
         }
 
-
-        
-
         public static void InsertTestData()
         {
             Items.Add(new ShoppingItem(id: 1, "Bananer", 5, false));

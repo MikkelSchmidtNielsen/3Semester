@@ -12,31 +12,39 @@ namespace BlazorAppRESTAPIAssignments.Client.Services
             _httpClient = httpClient;
         }
 
-        public Task<int> AddBook(Book book)
+        public Task<Book[]> GetAllBooks()
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> DeleteBook(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Book[]?> GetAllBooks()
-        {
-            var result = _httpClient.GetFromJsonAsync<Book[]>("sample-data/bookdata.json");
+            var result = _httpClient.GetFromJsonAsync<Book[]>("api/bookapi");
 
             return result;
         }
 
-        public Task<Book?> GetBook(int id)
+        public async Task<int> AddBook(Book book)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Service is called!");
+            var response = await _httpClient.PostAsJsonAsync("api/bookapi", book);
+            var responseStatusCode = response.StatusCode;
+            return (int)responseStatusCode;
         }
 
-        public Task<int> UpdateBook(Book book)
+        public async Task<Book?> GetBook(string isbn)
         {
-            throw new NotImplementedException();
+            var result = await _httpClient.GetFromJsonAsync<Book>("api/bookapi/" + isbn);
+            return result;
+        }
+
+        public async Task<int> DeleteBook(string isbn)
+        {
+            var response = await _httpClient.DeleteAsync("api/bookapi/" + isbn);
+            var responseStatusCode = response.StatusCode;
+            return (int)responseStatusCode;
+        }
+
+        public async Task<int> UpdateBook(Book book)
+        {
+            var response = await _httpClient.PutAsJsonAsync("api/shopapi/", book);
+            var responseStatusCode = response.StatusCode;
+            return (int)responseStatusCode;
         }
     }
 }
